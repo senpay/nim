@@ -12,7 +12,7 @@ def test_create_board_should_create_new_board():
 def test_is_dangerous_state_should_return_true_for_dangerous_state():
     """
     According to logic, if we convert initial state of the boars into binary code, it is going to be:
-    3 -> 11
+    3 -> 011
     4 -> 100
     5 -> 101
 
@@ -31,7 +31,7 @@ def test_is_dangerous_state_should_return_true_for_dangerous_state():
 def test_is_dangerous_state_should_return_false_for_safe_state():
     """
     According to logic, if we convert initial state of the boars into binary code, it is going to be:
-    1 -> 1
+    1 -> 001
     4 -> 100
     5 -> 101
 
@@ -44,4 +44,5 @@ def test_is_dangerous_state_should_return_false_for_safe_state():
     As we have even sums at each row - it means board is in safe state.
     """
     play_board = init_board()
+    play_board.first_line = 1
     assert is_dangerous_state(play_board) is False
