@@ -1,25 +1,40 @@
 class Board:
-    pass
+    def __init__(self):
+        self.lines = [0, 0, 0]
 
 
 def init_board() -> Board:
     board = Board()
-    board.first_line = 3
-    board.second_line = 4
-    board.third_line = 5
+    board.lines[0] = 3
+    board.lines[1] = 4
+    board.lines[2] = 5
+    return board
+
+
+def update_board(board: Board, line: int, number_of_coins: int) -> Board:
+    """
+    Subtracts specified number of coins from given line
+    """
+    board = _clone_board(board)
+    board.lines[line] = board.lines[line] - number_of_coins
     return board
 
 
 def is_dangerous_state(board: Board) -> bool:
     # As we know that maximum value is 5, we can safely
     # assume there should be no more than 3 positions
+    print(board.lines[0])
+    print(board.lines[1])
+    print(board.lines[2])
     for row in range(3):
-        if _calculate_row(board.first_line, board.second_line, board.third_line, row) % 2 == 1:
+        print("row=" + str(row))
+        print(_calculate_row(board.lines[0], board.lines[1], board.lines[2], row))
+        if _calculate_row(board.lines[0], board.lines[1], board.lines[2], row) % 2 == 1:
             return True
     return False
 
 
-def _calculate_row(first_line, second_line, third_line, row):
+def _calculate_row(first_line: int, second_line: int, third_line: int, row: int):
     return _get_binary_number_at(first_line, row) + _get_binary_number_at(second_line, row)\
            + _get_binary_number_at(third_line, row)
 
@@ -53,7 +68,7 @@ def _get_binary_number_at(decimal_number, position) -> int:
     return int(binary_string[position])
 
 
-def _convert_to_binary_string(decimal_number) -> str:
+def _convert_to_binary_string(decimal_number: int) -> str:
     """
     >>> _convert_to_binary_string(1)
     '001'
@@ -65,3 +80,10 @@ def _convert_to_binary_string(decimal_number) -> str:
     if binary_number_length < 3:
         binary_number = '0' * (3 - binary_number_length) + binary_number
     return binary_number
+
+
+def _clone_board(board: Board) -> Board:
+    new_board = Board()
+    for line in range(len(board.lines)):
+        new_board.lines[line] = board.lines[line]
+    return new_board
